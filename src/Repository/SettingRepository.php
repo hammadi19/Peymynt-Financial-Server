@@ -1,0 +1,78 @@
+<?php
+
+namespace App\Repository;
+
+use App\Entity\Setting;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Symfony\Bridge\Doctrine\RegistryInterface;
+
+/**
+ * @method Setting|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Setting|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Setting[]    findAll()
+ * @method Setting[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ */
+class SettingRepository extends ServiceEntityRepository
+{
+    public function __construct(RegistryInterface $registry)
+    {
+        parent::__construct($registry, Setting::class);
+    }
+
+
+    public function findSettingsByUser($user)
+    {
+
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = 'SELECT * FROM setting s WHERE s.user_id > :user_id';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(['user_id' => $user->getId()]);
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $stmt->fetchAll();
+
+        /*
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager->createQuery('SELECT s.data FROM App\Entity\Setting s WHERE s.user > :user')->setParameter('user', $user);
+        return $query->execute()->getResult();
+        */
+        /*
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.user = :val')
+            ->setParameter('val', $user)
+            ->getQuery()
+            ->getResult()
+        ;
+        */
+    }
+
+//    /**
+//     * @return Setting[] Returns an array of Setting objects
+//     */
+    /*
+    public function findByExampleField($value)
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.exampleField = :val')
+            ->setParameter('val', $value)
+            ->orderBy('s.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+    */
+
+    /*
+    public function findOneBySomeField($value): ?Setting
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.exampleField = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+    */
+}

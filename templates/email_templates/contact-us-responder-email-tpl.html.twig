@@ -1,0 +1,50 @@
+{% block body_html %}
+
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    </head>
+    <body style="margin:0px; background: #ffffff; ">
+
+
+    <div width="100%">
+        <div style="max-width: 700px; padding:40px 0;  margin: 0px auto;padding-left: 15px;
+    padding-right: 15px;">
+
+            <div class="logo" style="border-bottom: 1px solid #f0f0f0; padding-bottom: 20px;">
+                <img src="{{base_path}}/assets/dr-iq/images/template-logo.png" alt="logo">
+            </div>
+
+            <div>
+
+                <h3 style="font-family: sans-serif;font-size:15px;font-weight:500; padding-bottom: 20px;padding-top:20px; color:#000;">Dear {{ full_name }},</h3>
+
+                <p style="font-family: sans-serif;font-size: 15px;color: #000;font-weight: 500;line-height: 20px;margin-bottom:3px;">Thank you for your enquiry. We aim to respond within 24 hours and our working hours are 9am to 5pm, Monday to Friday.</p>
+
+                <p style="font-family: sans-serif;font-size:15px;font-weight: 500;line-height: 20px;padding-top: 15px;">Regards,</p>
+
+                <span style="font-family: sans-serif;font-size:15px;font-weight: 500;">Task-Bee | Customer Support</span>
+
+                <footer style="border-top:1px solid #f0f0f0;margin-top:40px;">
+                    <div style="float:left;">
+                        <p style="font-family: sans-serif;font-size:12px;font-weight: 500;
+    line-height: 20px; padding-top:8px;color: #cac2ba;">Copyright © 2018 Task-Bee <br> Address <br> www.task-bee.com</p>
+
+                    </div>
+
+                    <div style="clear:both;"></div>
+
+                </footer>
+
+            </div>
+
+
+        </div><!--end main div-->
+    </div>
+    </body>
+    </html>
+{% endblock %}

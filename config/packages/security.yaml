@@ -1,0 +1,59 @@
+# To get started with security, check out the documentation:
+# https://symfony.com/doc/current/security.html
+security:
+
+    encoders:
+        App\Entity\AppUser:
+          algorithm: bcrypt
+
+    providers:
+        app_provider:
+            entity:
+                class: App\Entity\AppUser
+                #property: email
+
+    role_hierarchy:
+        ROLE_USER:   ROLE_USER,
+        ROLE_ADMINISTRATOR: ROLE_ADMINISTRATOR
+
+    firewalls:
+        # disables authentication for assets and the profiler, adapt it according to your needs
+        #dev:
+            #pattern: ^/(_(profiler|wdt)|css|images|js)/
+            #security: true
+
+        #main:
+            #anonymous: ~
+            # activate different ways to authenticate
+
+            # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
+            #http_basic: ~
+
+            # https://symfony.com/doc/current/security/form_login_setup.html
+            #form_login: ~
+
+        login:
+            pattern:  ^/api/login
+            stateless: true
+            anonymous: true
+            form_login:
+                check_path: /api/login_check
+                success_handler: lexik_jwt_authentication.handler.authentication_success
+                failure_handler: lexik_jwt_authentication.handler.authentication_failure
+                require_previous_session: false
+
+        api:
+            pattern:   ^/api
+            stateless: true
+            anonymous: true
+            guard:
+                provider: app_provider
+                authenticators:
+                    - lexik_jwt_authentication.jwt_token_authenticator
+
+    access_control:
+        - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/user/sign-up, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/user/reset-password, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/user/forget-password, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api ,  roles: IS_AUTHENTICATED_FULLY }
